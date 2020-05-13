@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: openshift-samples-olm-operator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: openshift-samples-olm-operator
+  template:
+    metadata:
+      labels:
+        name: openshift-samples-olm-operator
+    spec:
+      serviceAccountName: openshift-samples-olm-operator
+      containers:
+        - name: openshift-samples-olm-operator
+          # Replace this with the built image name
+          image: quay.io/gabemontero/openshift-samples-olm-operator:latest
+          command:
+          - openshift-samples-olm-operator
+          imagePullPolicy: Always
+          env:
+            - name: WATCH_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: OPERATOR_NAME
+              value: "openshift-samples-olm-operator"

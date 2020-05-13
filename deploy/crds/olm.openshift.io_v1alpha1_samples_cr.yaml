@@ -1,0 +1,5 @@
+apiVersion: olm.openshift.io/v1alpha1
+kind: Samples
+metadata:
+  name: instance
+
